@@ -9,6 +9,8 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $baseUrl = 'http://localhost';
 
+    protected $defaultUser;
+
     /**
      * Creates the application.
      *
@@ -21,5 +23,21 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function defaultUser(array $attributes = [])
+    {
+        if($this->defaultUser){
+            return $this->defaultUser;
+        }
+        return $this->defaultUser = factory(\App\User::class)->create($attributes);
+    }
+
+    protected  function createPost(array $attributes = [])
+    {
+        return factory(\App\Post::class)->create($attributes);
     }
 }
